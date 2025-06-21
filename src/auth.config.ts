@@ -11,7 +11,16 @@ export const authConfig: NextAuthConfig = {
     },
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
-            console.log("🚀 ~ authorized ~ auth:", auth)
+            console.log("🚀 ~ authorized ~ auth:", auth);
+
+            const isLoggedIn = !!auth?.user;
+            const isAdmin = auth?.user?.role === 'admin';
+            const isAdminPage = nextUrl.pathname.startsWith('/admin');
+
+            if (isAdminPage) {
+                return isAdmin;
+            }
+
             return true;
         },
         jwt({ token, user }) {
