@@ -14,10 +14,13 @@ export const authConfig: NextAuthConfig = {
             console.log("🚀 ~ authorized ~ auth:", auth);
 
             const isLoggedIn = !!auth?.user;
-            const isAdmin = auth?.user?.role === 'admin';
             const isAdminPage = nextUrl.pathname.startsWith('/admin');
 
             if (isAdminPage) {
+                if (!isLoggedIn) return false;
+                console.log('Token data:', auth);
+                const isAdmin = auth?.user?.role === 'admin';
+                console.log('Is admin?', isAdmin);
                 return isAdmin;
             }
 
