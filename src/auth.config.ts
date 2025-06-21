@@ -11,17 +11,16 @@ export const authConfig: NextAuthConfig = {
     },
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
-            console.log("🚀 ~ authorized ~ auth:", auth);
-
             const isLoggedIn = !!auth?.user;
             const isAdminPage = nextUrl.pathname.startsWith('/admin');
 
             if (isAdminPage) {
                 if (!isLoggedIn) return false;
-                console.log('Token data:', auth);
-                const isAdmin = auth?.user?.role === 'admin';
-                console.log('Is admin?', isAdmin);
-                return isAdmin;
+                
+                const userRole = auth?.user?.role;
+                if (userRole !== 'admin') return false;
+                
+                return true;
             }
 
             return true;
