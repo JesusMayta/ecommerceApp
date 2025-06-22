@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import { FormAddress, Title } from '@/components';
-import { auth } from '@/auth.config';
 import { redirect } from 'next/navigation';
 import { getUserAddress } from '@/actions';
+import { auth } from '@/auth';
 
 export const metadata: Metadata = {
     title: 'Complete your Address ',
